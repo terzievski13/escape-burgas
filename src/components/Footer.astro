@@ -37,17 +37,19 @@ const { hideCta = false } = Astro.props;
       </>
     )}
 
-    <!-- Locations -->
-    <div class="two-col-grid" style="border-top:1px solid var(--color-line); padding-top:40px; margin-bottom:40px;">
-      <div>
-        <p class="eyebrow" style="margin-bottom:8px;">MAZZE 1</p>
-        <a href={site.locationMaps.mazze1} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.5rem; color:var(--color-muted); text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze1}</a>
+    {!hideCta && (
+      <!-- Locations -->
+      <div class="two-col-grid" style="border-top:1px solid var(--color-line); padding-top:40px; margin-bottom:40px;">
+        <div>
+          <p class="eyebrow" style="margin-bottom:8px;">MAZZE 1</p>
+          <a href={site.locationMaps.mazze1} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.5rem; color:var(--color-muted); text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze1}</a>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:8px;">MAZZE 2</p>
+          <a href={site.locationMaps.mazze2} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.5rem; color:var(--color-muted); text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze2}</a>
+        </div>
       </div>
-      <div>
-        <p class="eyebrow" style="margin-bottom:8px;">MAZZE 2</p>
-        <a href={site.locationMaps.mazze2} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.5rem; color:var(--color-muted); text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze2}</a>
-      </div>
-    </div>
+    )}
 
     <!-- Bottom bar -->
     <div class="footer-bottom" style="border-top:1px solid var(--color-line); padding-top:30px;">
