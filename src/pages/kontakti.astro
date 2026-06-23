@@ -8,6 +8,7 @@ import { site, activeSocials } from "../config";
 <Base
   title={`Контакти — ${site.name}`}
   description="Свържете се с Mazze Escape Rooms — резервации, въпроси и посещения в Бургас."
+  hideFooterCta={true}
 >
   <PageHeader
     eyebrow="Контакти"
@@ -66,11 +67,11 @@ import { site, activeSocials } from "../config";
         <div class="space-y-5">
           <div>
             <span class="text-sm text-[var(--color-ember)] uppercase tracking-[0.18em]">MAZZE 1</span>
-            <p class="mt-1 text-[var(--color-muted)]">{site.locations.mazze1}</p>
+            <a href={site.locationMaps.mazze1} target="_blank" rel="noopener noreferrer" class="mt-1 block link-underline text-[var(--color-muted)]">{site.locations.mazze1}</a>
           </div>
           <div>
             <span class="text-sm text-[var(--color-ember)] uppercase tracking-[0.18em]">MAZZE 2</span>
-            <p class="mt-1 text-[var(--color-muted)]">{site.locations.mazze2}</p>
+            <a href={site.locationMaps.mazze2} target="_blank" rel="noopener noreferrer" class="mt-1 block link-underline text-[var(--color-muted)]">{site.locations.mazze2}</a>
           </div>
         </div>
       </div>

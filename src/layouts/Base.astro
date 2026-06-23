@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   overHero?: boolean;
   ogImage?: string;
+  hideFooterCta?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = site.description,
   overHero = false,
   ogImage = "/images/og-default.jpg",
+  hideFooterCta = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -71,7 +73,7 @@ const jsonLd = {
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer hideCta={hideFooterCta} />
 
     <script>
       const els = document.querySelectorAll<HTMLElement>(".reveal");
