@@ -60,15 +60,6 @@ const configured =
     <p id="form-status" role="status" aria-live="polite"></p>
   </div>
 
-  {
-    !configured && (
-      <p class="mt-6 rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-muted)]">
-        ⚙︎ <strong class="font-semibold text-[var(--color-paper)]">Нужна е настройка:</strong> формулярът не е свързан.
-        Добавете Web3Forms ключ в <code>src/config.ts</code>. Засега пишете директно на{" "}
-        <a href={`mailto:${site.email}`} class="link-underline text-[var(--color-paper)]">{site.email}</a>.
-      </p>
-    )
-  }
 </form>
 
 <script>
