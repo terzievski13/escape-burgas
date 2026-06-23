@@ -1,0 +1,118 @@
+---
+import { site } from "../config";
+import { rooms } from "../data/rooms";
+
+const configured =
+  !!site.web3formsKey && site.web3formsKey !== "YOUR_WEB3FORMS_ACCESS_KEY";
+---
+
+<form
+  id="booking-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  data-configured={configured ? "true" : "false"}
+  data-email={site.email}
+  class="w-full"
+>
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="Запитване за резервация — Mazze Escape Rooms" />
+  <input type="hidden" name="from_name" value={site.name} />
+  <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+
+  <div class="grid gap-7 sm:grid-cols-2">
+    <div>
+      <label class="field-label" for="bf-name">Име</label>
+      <input class="field-input" id="bf-name" name="name" type="text" required autocomplete="name" placeholder="Вашето име" />
+    </div>
+    <div>
+      <label class="field-label" for="bf-email">Имейл</label>
+      <input class="field-input" id="bf-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+    </div>
+  </div>
+
+  <div class="mt-7 grid gap-7 sm:grid-cols-2">
+    <div>
+      <label class="field-label" for="bf-room">Стая</label>
+      <select class="field-input" id="bf-room" name="room">
+        <option value="">— изберете стая —</option>
+        {rooms.map((r) => <option value={r.slug}>{r.name}</option>)}
+      </select>
+    </div>
+    <div>
+      <label class="field-label" for="bf-players">Брой играчи</label>
+      <select class="field-input" id="bf-players" name="players">
+        {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+          <option value={n}>{n} {n === 1 ? "играч" : "играча"}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-7">
+    <label class="field-label" for="bf-message">Съобщение (дата, час и др.)</label>
+    <textarea class="field-input" id="bf-message" name="message" placeholder="Посочете предпочитана дата и час…"></textarea>
+  </div>
+
+  <div class="mt-9 flex flex-wrap items-center gap-5">
+    <button type="submit" class="btn btn-ember">
+      Изпрати запитване <span aria-hidden="true">&rarr;</span>
+    </button>
+    <p id="form-status" role="status" aria-live="polite"></p>
+  </div>
+
+  {
+    !configured && (
+      <p class="mt-6 rounded-md border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-muted)]">
+        ⚙︎ <strong class="font-semibold text-[var(--color-paper)]">Нужна е настройка:</strong> формулярът не е свързан.
+        Добавете Web3Forms ключ в <code>src/config.ts</code>. Засега пишете директно на{" "}
+        <a href={`mailto:${site.email}`} class="link-underline text-[var(--color-paper)]">{site.email}</a>.
+      </p>
+    )
+  }
+</form>
+
+<script>
+  const form   = document.getElementById("booking-form") as HTMLFormElement | null;
+  const status = document.getElementById("form-status");
+
+  const setStatus = (msg: string, kind: string): void => {
+    if (!status) return;
+    status.textContent = msg;
+    status.dataset.kind = kind;
+  };
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const configured = form.dataset.configured === "true";
+    const email      = form.dataset.email ?? "";
+    if (!configured) {
+      setStatus(`Формулярът не е свързан — пишете директно на ${email}.`, "error");
+      return;
+    }
+    if (!form.reportValidity()) return;
+
+    const btn     = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const payload = Object.fromEntries(new FormData(form).entries());
+    setStatus("Изпращане…", "pending");
+    btn?.setAttribute("disabled", "true");
+
+    try {
+      const res  = await fetch("https://api.web3forms.com/submit", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body:    JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (json.success) {
+        form.reset();
+        setStatus("Благодарим! Ще се свържем с вас скоро.", "success");
+      } else {
+        setStatus(json.message || "Нещо се обърка. Опитайте отново или ни пишете директно.", "error");
+      }
+    } catch {
+      setStatus("Мрежова грешка. Опитайте отново или ни пишете директно.", "error");
+    } finally {
+      btn?.removeAttribute("disabled");
+    }
+  });
+</script>

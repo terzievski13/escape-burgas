@@ -1,0 +1,246 @@
+---
+import Base from "../../layouts/Base.astro";
+import { rooms } from "../../data/rooms";
+import { site } from "../../config";
+
+export async function getStaticPaths() {
+  return rooms.map((room) => ({
+    params: { slug: room.slug },
+    props: { room },
+  }));
+}
+
+const { room } = Astro.props;
+const locationLabel = room.location === "mazze1" ? "MAZZE 1" : "MAZZE 2";
+const locationAddress = site.locations[room.location];
+const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
+---
+
+<Base
+  title={`${room.name} — ${site.name}`}
+  description={room.description}
+  ogImage={room.cover}
+>
+
+  <!-- ══════ HERO ══════ -->
+  <section style="position:relative; height:560px; overflow:hidden; background:#130e09;">
+    <img
+      src={room.cover}
+      alt={room.name}
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:sepia(0.34) contrast(1.05) brightness(0.56) saturate(1.1);"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(19,14,9,0.6) 0%, rgba(19,14,9,0.25) 32%, rgba(19,14,9,0.94) 100%);"></div>
+
+    <!-- Centered bottom content -->
+    <div style="position:absolute; left:56px; right:56px; bottom:48px; z-index:10; text-align:center;">
+      <!-- Breadcrumb -->
+      <a href="/stai" style="display:inline-block; font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.3em; text-transform:uppercase; color:#d4655a; margin-bottom:18px; text-decoration:none;">
+        <span style="color:#c5382c;">←</span>&nbsp; Всички стаи &nbsp;·&nbsp; {locationLabel}
+      </a>
+
+      <!-- Room name -->
+      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(3.5rem, 8vw, 6.5rem); line-height:0.9; margin:0; color:#e6dcc4;">
+        {room.name}
+      </h1>
+
+      <!-- Stats row -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:16px; font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:0.16em; text-transform:uppercase; color:#c4b89a; margin-top:22px;">
+        <span>{room.duration} мин</span>
+        <span style="color:#c5382c;">◆</span>
+        <span>{room.players} играчи</span>
+        <span style="color:#c5382c;">◆</span>
+        <span>{room.minAge}+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ CONTENT ══════ -->
+  <section>
+    <div class="container-x" style="padding-top:96px; padding-bottom:110px; display:grid; grid-template-columns:1fr 396px; gap:72px;">
+
+      <!-- LEFT: description + how it works + gallery -->
+      <div>
+
+        <!-- Легендата -->
+        <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(197,56,44,0.24);">
+          Легендата
+        </div>
+        <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(1.4rem, 2.2vw, 2rem); line-height:1.42; color:#ddd2ba; margin:0;">
+          {room.description}
+        </p>
+
+        <!-- Как протича -->
+        <div style="margin-top:64px;" class="reveal">
+          <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:30px; padding-bottom:16px; border-bottom:1px solid rgba(197,56,44,0.24);">
+            Как протича
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:36px;">
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.75rem; color:#c5382c; line-height:1;">I</div>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.625rem; margin:14px 0 10px;">Пъзели</h3>
+              <p style="font-family:'EB Garamond',serif; font-size:1rem; line-height:1.6; color:#a99d80; margin:0;">Ръчно изработени механизми, които изискват интуиция, логика и внимание към детайла.</p>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.75rem; color:#c5382c; line-height:1;">II</div>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.625rem; margin:14px 0 10px;">Жокери</h3>
+              <p style="font-family:'EB Garamond',serif; font-size:1rem; line-height:1.6; color:#a99d80; margin:0;">Следим играта през цялото време — поискайте жокер винаги, щом усетите затруднение.</p>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.75rem; color:#c5382c; line-height:1;">III</div>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.625rem; margin:14px 0 10px;">Възраст</h3>
+              <p style="font-family:'EB Garamond',serif; font-size:1rem; line-height:1.6; color:#a99d80; margin:0;">Минимум 14 г. По-малки играчи са добре дошли, придружени от възрастен.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        {room.gallery.length > 0 && (
+          <div style="margin-top:64px; border-top:1px solid rgba(197,56,44,0.18); padding-top:48px;" class="reveal">
+            <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:30px; text-align:center;">
+              Галерия
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+              {room.gallery.map((img, i) => (
+                <div
+                  class="reveal"
+                  style={`aspect-ratio:4/3; overflow:hidden; border:1px solid rgba(197,56,44,0.2); transition-delay:${i * 60}ms`}
+                >
+                  <img
+                    src={img}
+                    alt={`${room.name} ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    style="width:100%; height:100%; object-fit:cover; filter:sepia(0.24) brightness(0.9); transition:transform 0.7s ease;"
+                    onmouseover="this.style.transform='scale(1.05)'"
+                    onmouseout="this.style.transform='scale(1)'"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- RIGHT: booking card -->
+      <aside>
+        <div class="reveal" style="position:sticky; top:7rem; background:#1b130c; border:1px solid rgba(197,56,44,0.3); border-radius:2px; overflow:hidden;">
+
+          <!-- Crimson top bar -->
+          <div style="height:4px; background:#c5382c;"></div>
+
+          <div style="padding:34px;">
+            <!-- Header -->
+            <div style="text-align:center; padding-bottom:22px; border-bottom:1px solid rgba(197,56,44,0.2); margin-bottom:0;">
+              <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.875rem; margin:0 0 6px; padding-top:6px;">Резервация</h2>
+              <p style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:#8f8366; margin:0;">
+                {locationLabel} · {locationAddress}
+              </p>
+            </div>
+
+            <!-- Details -->
+            <dl style="margin:0;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:15px 0; border-bottom:1px dotted rgba(197,56,44,0.26);">
+                <dt style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; color:#a99d80;">Играчи</dt>
+                <dd style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.375rem; margin:0;">{room.players}</dd>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:15px 0; border-bottom:1px dotted rgba(197,56,44,0.26);">
+                <dt style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; color:#a99d80;">Времетраене</dt>
+                <dd style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.375rem; margin:0;">{room.duration} мин</dd>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:15px 0; border-bottom:1px dotted rgba(197,56,44,0.26);">
+                <dt style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; color:#a99d80;">Мин. възраст</dt>
+                <dd style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.375rem; margin:0;">{room.minAge}+</dd>
+              </div>
+            </dl>
+
+            <!-- Time slots -->
+            <div style="padding-top:22px; padding-bottom:22px; border-bottom:1px solid rgba(197,56,44,0.2);">
+              <p style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:#8f8366; margin:0 0 14px;">Свободни часове</p>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                {room.slots.map((s) => (
+                  <span style="font-family:'EB Garamond',serif; font-size:0.9rem; color:#e6dcc4; border:1px solid rgba(197,56,44,0.4); border-radius:1px; padding:8px 14px;">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Pricing -->
+            <div style="margin-top:22px; padding-bottom:8px;">
+              <p style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:#8f8366; margin:0 0 10px;">Цена на човек</p>
+              <ul style="list-style:none; margin:0; padding:0;">
+                {room.pricing.map((tier) => (
+                  <li style="display:flex; justify-content:space-between; align-items:baseline; padding:8px 0;">
+                    <span style="font-family:'EB Garamond',serif; font-size:1.05rem; color:#c4b89a;">{tier.label}</span>
+                    <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.625rem;">
+                      {tier.price} <span style="font-family:'EB Garamond',serif; font-size:0.78rem; color:#8f8366; font-weight:400;">лв</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- CTA buttons -->
+            <div style="margin-top:26px; display:flex; flex-direction:column; gap:10px;">
+              {site.phones.map((phone) => (
+                <a
+                  href={`tel:${phone.replace(/\s/g, "")}`}
+                  style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#f3ece0; background:#c5382c; padding:16px; text-align:center; border-radius:1px; text-decoration:none; display:block;"
+                >
+                  {phone}
+                </a>
+              ))}
+              <a
+                href={`mailto:${site.email}`}
+                style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#e6dcc4; border:1px solid rgba(197,56,44,0.5); padding:16px; text-align:center; border-radius:1px; text-decoration:none; display:block;"
+              >
+                {site.email}
+              </a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ══════ OTHER ROOMS ══════ -->
+  <section style="background:#180f0a; border-top:1px solid rgba(197,56,44,0.18);">
+    <div class="container-x" style="padding-top:96px; padding-bottom:120px;">
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.5rem, 5vw, 3.5rem); margin:0 0 44px; text-align:center;">
+        Разгледайте още стаи
+      </h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:30px;">
+        {otherRooms.map((r, i) => (
+          <div class="reveal" style={`transition-delay:${i * 90}ms`}>
+            <a
+              href={`/stai/${r.slug}`}
+              style="background:#1b130c; border:1px solid rgba(197,56,44,0.3); border-radius:2px; overflow:hidden; display:block; color:#e6dcc4; text-decoration:none;"
+            >
+              <div style="position:relative; aspect-ratio:3/2; overflow:hidden;">
+                <img
+                  src={r.cover}
+                  alt={r.name}
+                  loading="lazy"
+                  style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:sepia(0.26) brightness(0.86); transition:transform 0.7s ease;"
+                />
+                <span style="position:absolute; top:0; left:0; background:#c5382c; color:#f3ece0; font-family:'EB Garamond',serif; font-size:0.65rem; letter-spacing:0.16em; text-transform:uppercase; padding:6px 14px;">
+                  {r.location === "mazze1" ? "MAZZE 1" : "MAZZE 2"}
+                </span>
+              </div>
+              <div style="padding:24px; text-align:center;">
+                <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2rem; margin:0;">{r.name}</h3>
+                <div style="font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#8f8366; margin-top:10px;">
+                  {r.duration} мин · {r.players} играчи
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

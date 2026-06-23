@@ -1,0 +1,122 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { site } from "../config";
+import { rooms } from "../data/rooms";
+---
+
+<Base
+  title={`Цени — ${site.name}`}
+  description="Цени за всички escape room стаи на Mazze Бургас — групи от 1 до 7 играча."
+>
+  <PageHeader
+    eyebrow="Цени"
+    title="Ценоразпис"
+    intro="Цената е на човек. Колкото повече сте, толкова по-изгодно. Минимум 2 играча за повечето стаи."
+  />
+
+  <section class="container-x pb-28 md:pb-36">
+    <!-- Pricing cards -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 reveal">
+      {
+        rooms.map((room) => (
+          <div class="flex flex-col rounded-xl border border-[rgba(255,255,255,0.08)] bg-[var(--color-surface)] overflow-hidden">
+            <!-- Room cover thumbnail -->
+            <div class="relative h-44 overflow-hidden">
+              <img
+                src={room.cover}
+                alt={room.name}
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+              <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 40%, rgba(8,8,8,0.8) 100%);"></div>
+              <div class="absolute bottom-3 left-4">
+                <span class="text-[0.6rem] uppercase tracking-[0.22em] text-[var(--color-ember)]">
+                  {room.location === "mazze1" ? "MAZZE 1" : "MAZZE 2"}
+                </span>
+                <h3 class="text-lg font-semibold leading-tight">{room.name}</h3>
+              </div>
+            </div>
+
+            <!-- Meta + pricing -->
+            <div class="flex flex-1 flex-col p-6">
+              <div class="mb-5 flex gap-4 text-xs text-[var(--color-muted)]">
+                <span>{room.duration} мин</span>
+                <span aria-hidden="true" class="text-[var(--color-faint)]">·</span>
+                <span>{room.players} играча</span>
+              </div>
+
+              <ul class="flex-1 space-y-3">
+                {room.pricing.map((tier) => (
+                  <li class="flex items-baseline justify-between gap-4 border-b border-[var(--color-line)] pb-3 last:border-0 last:pb-0">
+                    <span class="text-sm text-[var(--color-muted)]">{tier.label}</span>
+                    <span class="font-semibold tabular-nums">
+                      {tier.price} <span class="text-xs font-normal text-[var(--color-faint)]">лв/чов.</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a href={`/stai/${room.slug}`} class="btn btn-outline mt-6 w-full text-center">
+                Към стаята
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Notes -->
+    <div class="reveal mt-16 rounded-xl border border-[rgba(255,255,255,0.08)] bg-[var(--color-surface)] p-8 md:p-10">
+      <p class="eyebrow mb-6">Важно</p>
+      <ul class="grid gap-4 text-[var(--color-muted)] sm:grid-cols-2 md:grid-cols-3">
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>Цената е на човек, без доплащане за часа или деня.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>Минимална възраст 14 г. Под 14 — само с придружаващ възрастен.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>7-ми играч е възможен, но стаята може да изглежда натоварена.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>Joker системата е включена — имате право на подсказки при поискване.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>Личните вещи може да оставите в предоставени шкафчета.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="mt-0.5 shrink-0 text-[var(--color-ember)]">—</span>
+          <span>Игрите се наблюдават в реално време от наш служител.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section class="bg-[var(--color-surface)] border-t border-[var(--color-line)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between reveal">
+        <div>
+          <p class="eyebrow">Резервация</p>
+          <h2 class="mt-4 text-4xl md:text-5xl">Обадете се или пишете.</h2>
+        </div>
+        <div class="flex flex-col gap-3 md:items-end">
+          {site.phones.map((phone) => (
+            <a href={`tel:${phone.replace(/\s/g, "")}`} class="btn btn-ember">
+              {phone}
+            </a>
+          ))}
+          <a href={`mailto:${site.email}`} class="btn btn-outline">
+            {site.email}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,106 @@
+---
+import { nav, site } from "../config";
+
+interface Props {
+  overHero?: boolean;
+}
+const { overHero = false } = Astro.props;
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header id="site-header" data-over-hero={overHero ? "true" : "false"} class="fixed inset-x-0 top-0 z-50">
+  <nav class="container-x flex h-20 items-center justify-between">
+    <a href="/" aria-label={site.name} class="relative z-10 block shrink-0" style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.1rem; letter-spacing:0.16em; color:#e6dcc4;">
+      Mazze
+    </a>
+
+    <ul class="hidden items-center gap-8 md:flex" style="font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:0.14em; text-transform:uppercase;">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "link-underline py-1 transition-opacity hover:opacity-60",
+                isActive(item.href) && "after:w-full",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden items-center gap-4 md:flex">
+      <a href="/kontakti" class="btn btn-ember text-[0.78rem] px-5 py-2.5">
+        Резервирай
+      </a>
+    </div>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="relative z-10 flex flex-col gap-[5px] p-1 md:hidden"
+      aria-label="Отвори меню"
+      aria-expanded="false"
+    >
+      <span class="bar block h-px w-6 bg-current"></span>
+      <span class="bar block h-px w-6 bg-current"></span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="fixed inset-0 z-0 bg-[var(--color-void)]">
+    <ul class="container-x mt-28 flex flex-col gap-1" style="font-family:'Cormorant Garamond',serif;">
+      {
+        nav.map((item) => (
+          <li>
+            <a href={item.href} class="block py-3 text-4xl font-semibold tracking-tight">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="mt-4">
+        <a href="/kontakti" class="btn btn-ember inline-flex">Резервирай</a>
+      </li>
+    </ul>
+    <div class="container-x mt-10">
+      <a href={`mailto:${site.email}`} class="link-underline text-sm text-[var(--color-muted)]">
+        {site.email}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("menu-toggle");
+  const menu   = document.getElementById("mobile-menu");
+  let menuOpen = false;
+
+  const syncSolid = (): void => {
+    if (!header) return;
+    header.classList.toggle("is-solid", menuOpen || window.scrollY > 24);
+  };
+
+  const setMenu = (open: boolean): void => {
+    menuOpen = open;
+    menu?.classList.toggle("open", open);
+    toggle?.classList.toggle("is-open", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+    toggle?.setAttribute("aria-label", open ? "Затвори меню" : "Отвори меню");
+    document.body.style.overflow = open ? "hidden" : "";
+    syncSolid();
+  };
+
+  syncSolid();
+  window.addEventListener("scroll", syncSolid, { passive: true });
+  toggle?.addEventListener("click", () => setMenu(!menuOpen));
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768 && menuOpen) setMenu(false);
+  });
+</script>

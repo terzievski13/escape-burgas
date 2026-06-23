@@ -1,0 +1,55 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import RoomCard from "../../components/RoomCard.astro";
+import { site } from "../../config";
+import { rooms } from "../../data/rooms";
+
+const mazze1 = rooms.filter((r) => r.location === "mazze1");
+const mazze2 = rooms.filter((r) => r.location === "mazze2");
+---
+
+<Base
+  title={`Стаи — ${site.name}`}
+  description="5 escape room стаи в Бургас — Египет, пътуване във времето, мистерии и африканска магия."
+>
+  <PageHeader
+    eyebrow="Стаи"
+    title="Изберете стая"
+    intro="Пет различни свята, всеки с уникална история. Намерете стаята, която ви предизвиква."
+  />
+
+  <!-- MAZZE 1 -->
+  <section class="container-x pb-20 md:pb-28">
+    <div class="mb-10 flex items-center gap-4 border-t border-[var(--color-line)] pt-8 reveal">
+      <span class="text-xs text-[var(--color-ember)] uppercase tracking-[0.22em]">MAZZE 1</span>
+      <span class="text-xs text-[var(--color-faint)]">{site.locations.mazze1}</span>
+    </div>
+    <div class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        mazze1.map((room, i) => (
+          <div class="reveal" style={`transition-delay:${i * 90}ms`}>
+            <RoomCard room={room} index={i} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- MAZZE 2 -->
+  <section class="container-x pb-28 md:pb-36">
+    <div class="mb-10 flex items-center gap-4 border-t border-[var(--color-line)] pt-8 reveal">
+      <span class="text-xs text-[var(--color-ember)] uppercase tracking-[0.22em]">MAZZE 2</span>
+      <span class="text-xs text-[var(--color-faint)]">{site.locations.mazze2}</span>
+    </div>
+    <div class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        mazze2.map((room, i) => (
+          <div class="reveal" style={`transition-delay:${i * 90}ms`}>
+            <RoomCard room={room} index={mazze1.length + i} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>

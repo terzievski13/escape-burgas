@@ -1,0 +1,153 @@
+---
+// Static Google reviews — update the reviews array with real content from your Google listing.
+// Link goes to your Google Maps place page.
+const MAPS_URL =
+  "https://www.google.com/maps/place/Escape+Room+Mazze+Burgas/@42.5139035,27.4565082,17z/data=!4m8!3m7!1s0x40a693f9c3397323:0x30c99cf8e929d700!8m2!3d42.5139035!4d27.4565082!9m1!1b1!16s%2Fg%2F11sx_ycwmg";
+
+const RATING   = 5.0;
+const TOTAL    = 493;
+
+// Real Google reviews for Escape Room Mazze Burgas (pulled from Google Maps).
+const reviews = [
+  {
+    name: "Gergana Koleva",
+    initials: "GK",
+    date: "преди 3 месеца",
+    stars: 5,
+    text: "Стаята беше страхотна! Всичко беше много добре измислено и направено. Нямаше нещо, което да не е логично или да не работи. Адмирации!",
+  },
+  {
+    name: "Dilyana Parusheva",
+    initials: "DP",
+    date: "преди месец",
+    stars: 5,
+    text: "Много вълнуваща игра! Стаята е създадена с внимание към всеки детайл и всяка една загадка в нея кара мисълта на човек да се движи в многослойни направления. Благодаря за емоцията!",
+  },
+  {
+    name: "Melisa Dineva",
+    initials: "MD",
+    date: "преди 4 месеца",
+    stars: 5,
+    text: "Посетихме стая „Експедиция“ и беше много забавно и интересно, останахме с много хубави емоции. Силно препоръчваме и задължително ще посетим останалите стаи!",
+  },
+  {
+    name: "Sisi Sisilota",
+    initials: "SS",
+    date: "преди 6 месеца",
+    stars: 5,
+    text: "Страхотно преживяване в „Паркът“ и на „Експедицията“. Ако търсите нещо да направите с приятели или с вашата половинка, не се чудете повече.",
+  },
+  {
+    name: "Дарка Попарка",
+    initials: "ДП",
+    date: "преди месец",
+    stars: 5,
+    text: "Готино беше, загадките не бяха много лесни, затова наистина е за любителите на такъв тип игри. Много ефектно направени стаи, браво на създателите!",
+  },
+  {
+    name: "Petya Ilieva",
+    initials: "PI",
+    date: "преди 6 месеца",
+    stars: 5,
+    text: "Благодарим за приятното изживяване! Много сте мили, кооперативни и любезни. Преживяване от ново поколение, с приятелско отношение и позитивизъм. Горещо препоръчвам!",
+  },
+];
+---
+
+<section style="background:var(--color-surface); border-top:1px solid var(--color-line); border-bottom:1px solid var(--color-line);">
+  <div class="container-x" style="padding-top:110px; padding-bottom:110px;">
+
+    <div style="display:flex; gap:56px; align-items:flex-start; flex-wrap:wrap;">
+
+      <!-- Left: rating summary -->
+      <div class="reveal" style="flex:none; width:220px;">
+        <p class="eyebrow" style="margin-bottom:14px;">Отзиви</p>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:5.25rem; line-height:0.85;">{RATING.toFixed(1)}</div>
+        <div style="font-family:'EB Garamond',serif; font-size:1.25rem; letter-spacing:0.2em; color:#d4655a; margin-top:10px;">★★★★★</div>
+        <p style="font-family:'EB Garamond',serif; font-size:0.9rem; color:#b3a382; margin-top:12px;">Базирано на {TOTAL} отзива в Google</p>
+        <a
+          href={MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-outline"
+          style="margin-top:24px; display:inline-block;"
+        >
+          Всички отзиви →
+        </a>
+      </div>
+
+      <!-- Right: carousel -->
+      <div style="flex:1; min-width:300px;">
+        <div
+          id="reviews-track"
+          class="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+          style="scrollbar-width: none; -ms-overflow-style: none;"
+        >
+          {reviews.map((r) => (
+            <div class="review-card snap-start shrink-0" style="width:min(340px, calc(100vw - 3rem)); background:#130e09; border:1px solid rgba(197,56,44,0.24); border-radius:2px; padding:30px;">
+              <div style="font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:0.16em; color:#d4655a; margin-bottom:14px;">★★★★★</div>
+              <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:1.35rem; line-height:1.45; margin:0; color:#e6dcc4;">„{r.text}"</p>
+              <div style="font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:#8f8366; margin-top:20px;">— {r.name}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Navigation arrows -->
+        <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+          <button
+            id="rev-prev"
+            aria-label="Предишни отзиви"
+            style="display:flex; width:40px; height:40px; align-items:center; justify-content:center; border:1px solid rgba(197,56,44,0.3); color:var(--color-muted); transition:all 0.3s ease; background:transparent; cursor:pointer; border-radius:1px;"
+          >
+            <svg style="width:16px; height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button
+            id="rev-next"
+            aria-label="Следващи отзиви"
+            style="display:flex; width:40px; height:40px; align-items:center; justify-content:center; border:1px solid rgba(197,56,44,0.3); color:var(--color-muted); transition:all 0.3s ease; background:transparent; cursor:pointer; border-radius:1px;"
+          >
+            <svg style="width:16px; height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #reviews-track::-webkit-scrollbar { display: none; }
+</style>
+
+<script>
+  const track = document.getElementById("reviews-track");
+  const prev  = document.getElementById("rev-prev") as HTMLButtonElement | null;
+  const next  = document.getElementById("rev-next") as HTMLButtonElement | null;
+
+  if (track) {
+    const cardWidth = (): number => {
+      const card = track.querySelector<HTMLElement>(".review-card");
+      if (!card) return 340;
+      return card.offsetWidth + 20; // width + gap
+    };
+
+    prev?.addEventListener("click", () => {
+      track.scrollBy({ left: -cardWidth(), behavior: "smooth" });
+    });
+    next?.addEventListener("click", () => {
+      track.scrollBy({ left: cardWidth(), behavior: "smooth" });
+    });
+
+    const syncButtons = () => {
+      if (prev) prev.disabled = track.scrollLeft <= 4;
+      if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    };
+
+    track.addEventListener("scroll", syncButtons, { passive: true });
+    syncButtons();
+  }
+</script>

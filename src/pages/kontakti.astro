@@ -1,0 +1,87 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import BookingForm from "../components/BookingForm.astro";
+import { site, activeSocials } from "../config";
+---
+
+<Base
+  title={`Контакти — ${site.name}`}
+  description="Свържете се с Mazze Escape Rooms — резервации, въпроси и посещения в Бургас."
+>
+  <PageHeader
+    eyebrow="Контакти"
+    title="Свържете се с нас"
+    intro="За резервации, въпроси или групови посещения — обадете се или изпратете съобщение."
+  />
+
+  <section class="container-x grid gap-14 pb-28 md:grid-cols-[1.4fr_1fr] md:gap-20 md:pb-36">
+    <!-- Booking form -->
+    <div class="reveal">
+      <p class="mb-8 text-sm text-[var(--color-muted)]">
+        Попълнете формуляра и ще ви отговорим в рамките на деня.
+      </p>
+      <BookingForm />
+    </div>
+
+    <!-- Info sidebar -->
+    <aside class="reveal flex flex-col gap-10">
+      <div>
+        <p class="field-label">Телефон</p>
+        {
+          site.phones.map((phone) => (
+            <a href={`tel:${phone.replace(/\s/g, "")}`} class="link-underline block text-xl mt-1">
+              {phone}
+            </a>
+          ))
+        }
+      </div>
+
+      <div>
+        <p class="field-label">Имейл</p>
+        <a href={`mailto:${site.email}`} class="link-underline text-xl">{site.email}</a>
+      </div>
+
+      {
+        activeSocials.length > 0 && (
+          <div>
+            <p class="field-label">Социални мрежи</p>
+            <ul class="flex flex-col gap-2 mt-2">
+              {activeSocials.map(([name, url]) => (
+                <li>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-underline text-lg capitalize"
+                  >
+                    {name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <div>
+        <p class="field-label mb-4">Адреси</p>
+        <div class="space-y-5">
+          <div>
+            <span class="text-xs text-[var(--color-ember)] uppercase tracking-[0.18em]">MAZZE 1</span>
+            <p class="mt-1 text-[var(--color-muted)]">{site.locations.mazze1}</p>
+          </div>
+          <div>
+            <span class="text-xs text-[var(--color-ember)] uppercase tracking-[0.18em]">MAZZE 2</span>
+            <p class="mt-1 text-[var(--color-muted)]">{site.locations.mazze2}</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="field-label">Отговор</p>
+        <p class="text-[var(--color-muted)]">Обикновено в рамките на деня.</p>
+      </div>
+    </aside>
+  </section>
+</Base>
