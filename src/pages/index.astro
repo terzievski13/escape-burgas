@@ -13,7 +13,7 @@ import { rooms } from "../data/rooms";
   <!-- Intro statement -->
   <section style="border-bottom:1px solid var(--color-line);">
     <div class="container-x section-pad-xl" style="text-align:center;">
-      <p class="eyebrow reveal" style="margin-bottom:34px;">— Въведение —</p>
+      <p class="eyebrow reveal" style="margin-bottom:34px;">Въведение</p>
       <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(1.5rem, 3.5vw, 2.875rem); line-height:1.32; margin:0 auto; max-width:920px;">
         Пет уникални стаи, два адреса в Бургас. Забравете реалността за
         <em style="font-style:italic; color:#c5382c;">55 или 75 минути</em>
@@ -63,32 +63,16 @@ import { rooms } from "../data/rooms";
       <div class="reveal" style="border:1px solid rgba(197,56,44,0.3); border-radius:2px; padding:clamp(28px,5vw,48px);">
         <p class="eyebrow" style="margin-bottom:14px;">Mazze 1</p>
         <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(1.8rem,3vw,2.5rem); margin:0;">Жк Славейков</h3>
-        <p style="font-family:'EB Garamond',serif; font-size:1.1rem; color:#c4b89a; margin:14px 0 0;">{site.locations.mazze1}</p>
-        <p style="font-family:'EB Garamond',serif; font-size:0.85rem; letter-spacing:0.08em; color:#8f8366; margin:24px 0 0;">4 стаи · Експедиция, Еволюция, Паркът, Раклата</p>
+        <a href={site.locationMaps.mazze1} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.1rem; color:#c4b89a; margin:14px 0 0; display:inline-block; text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze1}</a>
+        <p style="font-family:'EB Garamond',serif; font-size:1.275rem; letter-spacing:0.08em; color:#8f8366; margin:24px 0 0;">4 стаи · Експедиция, Еволюция, Паркът, Раклата</p>
       </div>
       <div class="reveal" style="border:1px solid rgba(197,56,44,0.3); border-radius:2px; padding:clamp(28px,5vw,48px); transition-delay:90ms;">
         <p class="eyebrow" style="margin-bottom:14px;">Mazze 2</p>
         <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(1.8rem,3vw,2.5rem); margin:0;">Митрополит Симеон</h3>
-        <p style="font-family:'EB Garamond',serif; font-size:1.1rem; color:#c4b89a; margin:14px 0 0;">{site.locations.mazze2}</p>
-        <p style="font-family:'EB Garamond',serif; font-size:0.85rem; letter-spacing:0.08em; color:#8f8366; margin:24px 0 0;">1 стая · Проклятието Бинаму</p>
+        <a href={site.locationMaps.mazze2} target="_blank" rel="noopener noreferrer" style="font-family:'EB Garamond',serif; font-size:1.1rem; color:#c4b89a; margin:14px 0 0; display:inline-block; text-decoration:underline; text-underline-offset:3px; text-decoration-color:currentColor;">{site.locations.mazze2}</a>
+        <p style="font-family:'EB Garamond',serif; font-size:1.275rem; letter-spacing:0.08em; color:#8f8366; margin:24px 0 0;">1 стая · Проклятието Бинаму</p>
       </div>
     </div>
   </section>
 
-  <!-- Booking CTA -->
-  <section style="background:var(--color-surface); border-top:1px solid var(--color-line);">
-    <div class="container-x section-pad-xl" style="text-align:center;">
-      <p class="eyebrow reveal" style="margin-bottom:26px;">Готови за приключение?</p>
-      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(2.5rem, 8vw, 6rem); line-height:0.96; margin:0 0 40px;">
-        Резервирайте<br /><em style="font-style:italic;">вашата стая.</em>
-      </h2>
-      <div class="reveal footer-contact">
-        {site.phones.map((phone) => (
-          <a href={`tel:${phone.replace(/\s/g, "")}`} class="link-underline" style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,4vw,2rem); color:#e6dcc4;">
-            {phone}
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
 </Base>

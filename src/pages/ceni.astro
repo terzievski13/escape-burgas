@@ -31,7 +31,7 @@ import { rooms } from "../data/rooms";
               />
               <div class="absolute inset-0" style="background: linear-gradient(to bottom, transparent 40%, rgba(8,8,8,0.8) 100%);"></div>
               <div class="absolute bottom-3 left-4">
-                <span class="text-[0.6rem] uppercase tracking-[0.22em] text-[var(--color-ember)]">
+                <span class="text-[0.82rem] uppercase tracking-[0.22em] text-[var(--color-ember)]">
                   {room.location === "mazze1" ? "MAZZE 1" : "MAZZE 2"}
                 </span>
                 <h3 class="text-lg font-semibold leading-tight">{room.name}</h3>
@@ -40,7 +40,7 @@ import { rooms } from "../data/rooms";
 
             <!-- Meta + pricing -->
             <div class="flex flex-1 flex-col p-6">
-              <div class="mb-5 flex gap-4 text-xs text-[var(--color-muted)]">
+              <div class="mb-5 flex gap-4 text-sm text-[var(--color-muted)]">
                 <span>{room.duration} мин</span>
                 <span aria-hidden="true" class="text-[var(--color-faint)]">·</span>
                 <span>{room.players} играча</span>
@@ -49,9 +49,9 @@ import { rooms } from "../data/rooms";
               <ul class="flex-1 space-y-3">
                 {room.pricing.map((tier) => (
                   <li class="flex items-baseline justify-between gap-4 border-b border-[var(--color-line)] pb-3 last:border-0 last:pb-0">
-                    <span class="text-sm text-[var(--color-muted)]">{tier.label}</span>
+                    <span class="text-base text-[var(--color-muted)]">{tier.label}</span>
                     <span class="font-semibold tabular-nums">
-                      {tier.price} <span class="text-xs font-normal text-[var(--color-faint)]">лв/чов.</span>
+                      {tier.price} <span class="text-sm font-normal text-[var(--color-faint)]">лв/чов.</span>
                     </span>
                   </li>
                 ))}
@@ -98,25 +98,4 @@ import { rooms } from "../data/rooms";
     </div>
   </section>
 
-  <!-- Booking CTA -->
-  <section class="bg-[var(--color-surface)] border-t border-[var(--color-line)]">
-    <div class="container-x py-20 md:py-28">
-      <div class="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between reveal">
-        <div>
-          <p class="eyebrow">Резервация</p>
-          <h2 class="mt-4 text-4xl md:text-5xl">Обадете се или пишете.</h2>
-        </div>
-        <div class="flex flex-col gap-3 md:items-end">
-          {site.phones.map((phone) => (
-            <a href={`tel:${phone.replace(/\s/g, "")}`} class="btn btn-ember">
-              {phone}
-            </a>
-          ))}
-          <a href={`mailto:${site.email}`} class="btn btn-outline">
-            {site.email}
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 </Base>

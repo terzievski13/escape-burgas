@@ -59,7 +59,7 @@
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: clamp(0.82rem, 2vw, 1.35rem);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.3em;
@@ -75,7 +75,7 @@
   padding: 0.75rem 1.75rem;
   min-height: 44px;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -159,7 +159,7 @@
    ────────────────────────────────────────────── */
 .field-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--color-faint);
