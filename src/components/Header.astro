@@ -43,37 +43,43 @@ const isActive = (href: string) =>
     <button
       id="menu-toggle"
       type="button"
-      class="relative z-10 flex flex-col gap-[5px] p-1 md:hidden"
+      class="relative z-10 flex flex-col items-end justify-center gap-[6px] md:hidden"
+      style="width:44px; height:44px; background:transparent; border:none; cursor:pointer; padding:10px 4px;"
       aria-label="Отвори меню"
       aria-expanded="false"
     >
-      <span class="bar block h-px w-6 bg-current"></span>
-      <span class="bar block h-px w-6 bg-current"></span>
+      <span class="bar block h-[2px] w-6 bg-current rounded-sm"></span>
+      <span class="bar block h-[2px] w-4 bg-current rounded-sm"></span>
     </button>
   </nav>
+</header>
 
-  <div id="mobile-menu" class="fixed inset-0 z-0 bg-[var(--color-void)]">
-    <ul class="container-x mt-28 flex flex-col gap-1" style="font-family:'Cormorant Garamond',serif;">
+<!-- Mobile menu is a sibling of <header>, not inside it.
+     backdrop-filter on the solid header would trap fixed children to the 80px bar. -->
+<div id="mobile-menu" aria-hidden="true" style="position:fixed; inset:0; z-index:48; background:#130e09;">
+  <div style="padding-top:80px; height:100%; overflow-y:auto;">
+    <ul class="container-x" style="padding-top:40px; font-family:'Cormorant Garamond',serif; display:flex; flex-direction:column; gap:4px;">
       {
         nav.map((item) => (
           <li>
-            <a href={item.href} class="block py-3 text-4xl font-semibold tracking-tight">
+            <a href={item.href} class="block" style="font-size:2.75rem; font-weight:600; color:#e6dcc4; padding:10px 0; border-bottom:1px solid rgba(197,56,44,0.12); text-decoration:none;">
               {item.label}
             </a>
           </li>
         ))
       }
-      <li class="mt-4">
-        <a href="/kontakti" class="btn btn-ember inline-flex">Резервирай</a>
+      <li style="margin-top:28px;">
+        <a href="/kontakti" class="btn btn-ember" style="display:inline-flex;">Резервирай</a>
       </li>
     </ul>
-    <div class="container-x mt-10">
-      <a href={`mailto:${site.email}`} class="link-underline text-sm text-[var(--color-muted)]">
+    <div class="container-x" style="margin-top:40px; padding-top:24px; border-top:1px solid rgba(197,56,44,0.2);">
+      <p style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.24em; text-transform:uppercase; color:#8f8366; margin:0 0 8px;">Контакт</p>
+      <a href={`mailto:${site.email}`} class="link-underline" style="font-family:'EB Garamond',serif; font-size:1rem; color:#c4b89a;">
         {site.email}
       </a>
     </div>
   </div>
-</header>
+</div>
 
 <script>
   const header = document.getElementById("site-header");
@@ -89,6 +95,7 @@ const isActive = (href: string) =>
   const setMenu = (open: boolean): void => {
     menuOpen = open;
     menu?.classList.toggle("open", open);
+    menu?.setAttribute("aria-hidden", String(!open));
     toggle?.classList.toggle("is-open", open);
     toggle?.setAttribute("aria-expanded", String(open));
     toggle?.setAttribute("aria-label", open ? "Затвори меню" : "Отвори меню");

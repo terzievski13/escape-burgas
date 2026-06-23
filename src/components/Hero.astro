@@ -1,7 +1,7 @@
 ---
 ---
 
-<section style="position:relative; height:92vh; min-height:760px; overflow:hidden; background:#130e09;">
+<section style="position:relative; height:92vh; min-height:600px; overflow:hidden; background:#130e09;">
 
   <!-- Background image with warm sepia treatment -->
   <img
@@ -19,30 +19,30 @@
   <div style="position:absolute; inset:0; background:radial-gradient(ellipse 66% 52% at 50% 44%, rgba(197,56,44,0.12) 0%, transparent 64%);"></div>
 
   <!-- Horizontal divider line below header -->
-  <div style="position:absolute; top:90px; left:52px; right:52px; height:1px; background:linear-gradient(to right, transparent, rgba(197,56,44,0.55), transparent); z-index:30;"></div>
+  <div class="hero-divider" style="position:absolute; height:1px; background:linear-gradient(to right, transparent, rgba(197,56,44,0.55), transparent); z-index:30;"></div>
 
   <!-- Ornamental frame rectangle -->
-  <div style="position:absolute; left:52px; right:52px; bottom:56px; top:120px; border:1px solid rgba(197,56,44,0.24); pointer-events:none; z-index:10;"></div>
+  <div class="hero-frame" style="position:absolute; border:1px solid rgba(197,56,44,0.24); pointer-events:none; z-index:10;"></div>
 
   <!-- Corner brackets -->
-  <div style="position:absolute; left:44px; top:112px; width:16px; height:16px; border-top:1px solid #c5382c; border-left:1px solid #c5382c; z-index:10;"></div>
-  <div style="position:absolute; right:44px; top:112px; width:16px; height:16px; border-top:1px solid #c5382c; border-right:1px solid #c5382c; z-index:10;"></div>
-  <div style="position:absolute; left:44px; bottom:48px; width:16px; height:16px; border-bottom:1px solid #c5382c; border-left:1px solid #c5382c; z-index:10;"></div>
-  <div style="position:absolute; right:44px; bottom:48px; width:16px; height:16px; border-bottom:1px solid #c5382c; border-right:1px solid #c5382c; z-index:10;"></div>
+  <div class="hero-corner-tl" style="position:absolute; width:16px; height:16px; border-top:1px solid #c5382c; border-left:1px solid #c5382c; z-index:10;"></div>
+  <div class="hero-corner-tr" style="position:absolute; width:16px; height:16px; border-top:1px solid #c5382c; border-right:1px solid #c5382c; z-index:10;"></div>
+  <div class="hero-corner-bl" style="position:absolute; width:16px; height:16px; border-bottom:1px solid #c5382c; border-left:1px solid #c5382c; z-index:10;"></div>
+  <div class="hero-corner-br" style="position:absolute; width:16px; height:16px; border-bottom:1px solid #c5382c; border-right:1px solid #c5382c; z-index:10;"></div>
 
   <!-- Centered hero content -->
-  <div style="position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 80px;">
+  <div class="hero-content" style="position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
 
     <p style="font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.42em; text-transform:uppercase; color:#d4655a; margin:0 0 22px;">
       · Бургас · Пет стаи за бягство ·
     </p>
 
-    <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(4.5rem, 10vw, 8rem); line-height:0.92; letter-spacing:0.01em; margin:0;">
+    <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(3.4rem, 10vw, 8rem); line-height:0.92; letter-spacing:0.01em; margin:0;">
       Живей<br />
       <em style="font-style:italic; color:#c5382c;">приключението</em>
     </h1>
 
-    <p style="font-family:'EB Garamond',serif; font-size:1.15rem; line-height:1.6; color:#c4b89a; max-width:520px; margin:34px 0 0;">
+    <p class="hero-sub" style="font-family:'EB Garamond',serif; font-size:1.15rem; line-height:1.6; color:#c4b89a; max-width:520px; margin:34px 0 0;">
       Логика, интуиция и екипна работа. Всеки механизъм е изработен на ръка — влезте и намерете пътя си навън.
     </p>
 
@@ -54,3 +54,37 @@
   </div>
 
 </section>
+
+<style>
+  /* Desktop positions */
+  .hero-divider    { top: 90px; left: 52px; right: 52px; }
+  .hero-frame      { left: 52px; right: 52px; bottom: 56px; top: 120px; }
+  .hero-corner-tl  { left: 44px; top: 112px; }
+  .hero-corner-tr  { right: 44px; top: 112px; }
+  .hero-corner-bl  { left: 44px; bottom: 48px; }
+  .hero-corner-br  { right: 44px; bottom: 48px; }
+  .hero-content    { padding: 0 80px; }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .hero-divider    { left: 14px; right: 14px; }
+    .hero-frame      { left: 14px; right: 14px; bottom: 28px; top: 84px; }
+    .hero-corner-tl  { left: 6px; top: 76px; }
+    .hero-corner-tr  { right: 6px; top: 76px; }
+    .hero-corner-bl  { left: 6px; bottom: 20px; }
+    .hero-corner-br  { right: 6px; bottom: 20px; }
+    .hero-content    { padding: 0 28px; }
+    .hero-sub        { display: none; }
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-divider    { left: 28px; right: 28px; }
+    .hero-frame      { left: 28px; right: 28px; bottom: 40px; top: 110px; }
+    .hero-corner-tl  { left: 20px; top: 102px; }
+    .hero-corner-tr  { right: 20px; top: 102px; }
+    .hero-corner-bl  { left: 20px; bottom: 32px; }
+    .hero-corner-br  { right: 20px; bottom: 32px; }
+    .hero-content    { padding: 0 48px; }
+  }
+</style>

@@ -34,19 +34,19 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
     <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(19,14,9,0.6) 0%, rgba(19,14,9,0.25) 32%, rgba(19,14,9,0.94) 100%);"></div>
 
     <!-- Centered bottom content -->
-    <div style="position:absolute; left:56px; right:56px; bottom:48px; z-index:10; text-align:center;">
+    <div class="room-hero-bottom" style="position:absolute; z-index:10; text-align:center;">
       <!-- Breadcrumb -->
       <a href="/stai" style="display:inline-block; font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.3em; text-transform:uppercase; color:#d4655a; margin-bottom:18px; text-decoration:none;">
         <span style="color:#c5382c;">←</span>&nbsp; Всички стаи &nbsp;·&nbsp; {locationLabel}
       </a>
 
       <!-- Room name -->
-      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(3.5rem, 8vw, 6.5rem); line-height:0.9; margin:0; color:#e6dcc4;">
+      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.8rem, 8vw, 6.5rem); line-height:0.9; margin:0; color:#e6dcc4;">
         {room.name}
       </h1>
 
       <!-- Stats row -->
-      <div style="display:flex; align-items:center; justify-content:center; gap:16px; font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:0.16em; text-transform:uppercase; color:#c4b89a; margin-top:22px;">
+      <div style="display:flex; align-items:center; justify-content:center; gap:16px; font-family:'EB Garamond',serif; font-size:1rem; letter-spacing:0.16em; text-transform:uppercase; color:#c4b89a; margin-top:22px; flex-wrap:wrap;">
         <span>{room.duration} мин</span>
         <span style="color:#c5382c;">◆</span>
         <span>{room.players} играчи</span>
@@ -58,7 +58,7 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
 
   <!-- ══════ CONTENT ══════ -->
   <section>
-    <div class="container-x" style="padding-top:96px; padding-bottom:110px; display:grid; grid-template-columns:1fr 396px; gap:72px;">
+    <div class="container-x room-layout-grid">
 
       <!-- LEFT: description + how it works + gallery -->
       <div>
@@ -67,7 +67,7 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
         <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(197,56,44,0.24);">
           Легендата
         </div>
-        <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(1.4rem, 2.2vw, 2rem); line-height:1.42; color:#ddd2ba; margin:0;">
+        <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(1.25rem, 2.2vw, 2rem); line-height:1.42; color:#ddd2ba; margin:0;">
           {room.description}
         </p>
 
@@ -76,7 +76,7 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
           <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:30px; padding-bottom:16px; border-bottom:1px solid rgba(197,56,44,0.24);">
             Как протича
           </div>
-          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:36px;">
+          <div class="howto-grid">
             <div>
               <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.75rem; color:#c5382c; line-height:1;">I</div>
               <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.625rem; margin:14px 0 10px;">Пъзели</h3>
@@ -101,7 +101,7 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
             <div style="font-family:'EB Garamond',serif; font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#c5382c; margin-bottom:30px; text-align:center;">
               Галерия
             </div>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+            <div class="gallery-grid">
               {room.gallery.map((img, i) => (
                 <div
                   class="reveal"
@@ -124,7 +124,7 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
       </div>
 
       <!-- RIGHT: booking card -->
-      <aside>
+      <aside id="booking-card">
         <div class="reveal" style="position:sticky; top:7rem; background:#1b130c; border:1px solid rgba(197,56,44,0.3); border-radius:2px; overflow:hidden;">
 
           <!-- Crimson top bar -->
@@ -187,14 +187,14 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
               {site.phones.map((phone) => (
                 <a
                   href={`tel:${phone.replace(/\s/g, "")}`}
-                  style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#f3ece0; background:#c5382c; padding:16px; text-align:center; border-radius:1px; text-decoration:none; display:block;"
+                  style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#f3ece0; background:#c5382c; padding:16px; text-align:center; border-radius:1px; text-decoration:none; display:block; min-height:44px; display:flex; align-items:center; justify-content:center;"
                 >
                   {phone}
                 </a>
               ))}
               <a
                 href={`mailto:${site.email}`}
-                style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#e6dcc4; border:1px solid rgba(197,56,44,0.5); padding:16px; text-align:center; border-radius:1px; text-decoration:none; display:block;"
+                style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#e6dcc4; border:1px solid rgba(197,56,44,0.5); padding:16px; text-align:center; border-radius:1px; text-decoration:none; min-height:44px; display:flex; align-items:center; justify-content:center;"
               >
                 {site.email}
               </a>
@@ -208,11 +208,11 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
 
   <!-- ══════ OTHER ROOMS ══════ -->
   <section style="background:#180f0a; border-top:1px solid rgba(197,56,44,0.18);">
-    <div class="container-x" style="padding-top:96px; padding-bottom:120px;">
-      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.5rem, 5vw, 3.5rem); margin:0 0 44px; text-align:center;">
+    <div class="container-x section-pad">
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2rem, 5vw, 3.5rem); margin:0 0 44px; text-align:center;">
         Разгледайте още стаи
       </h2>
-      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:30px;">
+      <div class="other-rooms-grid">
         {otherRooms.map((r, i) => (
           <div class="reveal" style={`transition-delay:${i * 90}ms`}>
             <a
@@ -243,4 +243,63 @@ const otherRooms = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
     </div>
   </section>
 
+  <!-- ══════ MOBILE STICKY BOOKING BAR ══════ -->
+  <div class="mobile-book-bar" aria-label="Резервирай">
+    <a href={`tel:${site.phones[0].replace(/\s/g, "")}`} class="btn btn-ember" style="flex:1; justify-content:center;">
+      {site.phones[0]}
+    </a>
+    <a href="#booking-card" class="btn btn-outline" style="flex:1; justify-content:center;">
+      Детайли →
+    </a>
+  </div>
+
 </Base>
+
+<style>
+  /* Hero bottom content positioning */
+  .room-hero-bottom {
+    left: 56px;
+    right: 56px;
+    bottom: 48px;
+  }
+
+  /* Mobile sticky booking bar */
+  .mobile-book-bar {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .room-hero-bottom {
+      left: 16px;
+      right: 16px;
+      bottom: 28px;
+    }
+
+    /* Booking card: remove sticky on mobile */
+    #booking-card > div {
+      position: static !important;
+    }
+
+    /* Extra bottom padding so content clears the sticky bar */
+    section:has(.other-rooms-grid) {
+      padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Show sticky mobile bar */
+    .mobile-book-bar {
+      display: flex;
+      gap: 10px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+      background: rgba(19, 14, 9, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(197, 56, 44, 0.3);
+      z-index: 40;
+    }
+  }
+</style>
