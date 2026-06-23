@@ -9,11 +9,11 @@ const { room } = Astro.props;
 const locationLabel = room.location === "mazze1" ? "MAZZE 1" : "MAZZE 2";
 ---
 
-<article class="group" style="background:#1b130c; border:1px solid rgba(197,56,44,0.3); border-radius:2px; overflow:hidden;">
+<article class="group" style="background:#1b130c; border:1px solid rgba(197,56,44,0.3); border-radius:2px; overflow:hidden; flex:1; display:flex; flex-direction:column;">
   <a
     href={`/stai/${room.slug}`}
     aria-label={room.name}
-    style="display:block; color:#e6dcc4; text-decoration:none;"
+    style="display:flex; flex-direction:column; flex:1; color:#e6dcc4; text-decoration:none;"
   >
     <!-- Cover image -->
     <div style="position:relative; aspect-ratio:3/2; overflow:hidden;">
@@ -25,30 +25,27 @@ const locationLabel = room.location === "mazze1" ? "MAZZE 1" : "MAZZE 2";
         class="transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"
         style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:sepia(0.26) brightness(0.86) saturate(1.04);"
       />
-      <!-- Location badge -->
-      <span style="position:absolute; top:12px; left:12px; font-family:'EB Garamond',serif; font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; color:#c5382c;">
-        {locationLabel}
-      </span>
     </div>
 
     <!-- Card body -->
-    <div style="padding:28px 26px 30px; text-align:center;">
+    <div style="padding:28px 26px 30px; text-align:center; display:flex; flex-direction:column; flex:1;">
       <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.1rem; margin:8px 0 0; line-height:1.1;">
         {room.name}
       </h3>
 
-      <!-- Meta with dashed separator -->
-      <div style="display:flex; align-items:center; justify-content:center; gap:12px; font-family:'EB Garamond',serif; font-size:0.9rem; color:#b3a382; margin:16px 0; padding:14px 0; border-top:1px dashed rgba(197,56,44,0.34); border-bottom:1px dashed rgba(197,56,44,0.34);">
-        <span>{room.duration} мин</span>
-        <span style="color:#c5382c;">◆</span>
-        <span>{room.players} играчи</span>
-        <span style="color:#c5382c;">◆</span>
-        <span>{room.minAge}+</span>
+      <!-- Meta + CTA pushed to bottom -->
+      <div style="margin-top:auto;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; font-family:'EB Garamond',serif; font-size:0.9rem; color:#b3a382; margin:16px 0; padding:14px 0; border-top:1px dashed rgba(197,56,44,0.34); border-bottom:1px dashed rgba(197,56,44,0.34);">
+          <span>{room.duration} мин</span>
+          <span style="color:#c5382c;">◆</span>
+          <span>{room.players} играчи</span>
+          <span style="color:#c5382c;">◆</span>
+          <span>{room.minAge}+</span>
+        </div>
+        <p style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#c5382c;">
+          Виж стаята →
+        </p>
       </div>
-
-      <p style="font-family:'EB Garamond',serif; font-size:0.9rem; letter-spacing:0.14em; text-transform:uppercase; color:#c5382c;">
-        Виж стаята →
-      </p>
     </div>
   </a>
 </article>

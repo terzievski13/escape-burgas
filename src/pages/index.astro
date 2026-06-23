@@ -31,14 +31,14 @@ import { rooms } from "../data/rooms";
     <div class="rooms-grid">
       {
         rooms.map((room, i) => (
-          <div class="reveal" style={`transition-delay:${i * 90}ms`}>
+          <div class="reveal" style={`transition-delay:${i * 90}ms; display:flex; flex-direction:column;`}>
             <RoomCard room={room} index={i} />
           </div>
         ))
       }
       <!-- "All rooms" ghost tile — only shown when rooms count is not divisible by 3 -->
       {rooms.length % 3 !== 0 && (
-        <div class="reveal" style={`transition-delay:${rooms.length * 90}ms`}>
+        <div class="reveal" style={`transition-delay:${rooms.length * 90}ms; display:flex; flex-direction:column;`}>
           <a
             href="/stai"
             style="background:transparent; border:1px dashed rgba(197,56,44,0.4); border-radius:2px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#e6dcc4; min-height:200px; height:100%; padding:40px; text-decoration:none;"
