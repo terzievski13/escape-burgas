@@ -129,17 +129,30 @@ const reviews = [
   const next  = document.getElementById("rev-next") as HTMLButtonElement | null;
 
   if (track) {
-    const cardWidth = (): number => {
-      const card = track.querySelector<HTMLElement>(".review-card");
-      if (!card) return 340;
-      return card.offsetWidth + 20; // width + gap
+    const cards = Array.from(track.querySelectorAll<HTMLElement>(".review-card"));
+
+    const currentIndex = (): number => {
+      const trackLeft = track.getBoundingClientRect().left;
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.getBoundingClientRect().left - trackLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      return closest;
+    };
+
+    const scrollToCard = (card: HTMLElement) => {
+      const trackLeft = track.getBoundingClientRect().left;
+      const cardLeft  = card.getBoundingClientRect().left;
+      track.scrollTo({ left: track.scrollLeft + (cardLeft - trackLeft), behavior: "smooth" });
     };
 
     prev?.addEventListener("click", () => {
-      track.scrollBy({ left: -cardWidth(), behavior: "smooth" });
+      scrollToCard(cards[Math.max(0, currentIndex() - 1)]);
     });
     next?.addEventListener("click", () => {
-      track.scrollBy({ left: cardWidth(), behavior: "smooth" });
+      scrollToCard(cards[Math.min(cards.length - 1, currentIndex() + 1)]);
     });
 
     const syncButtons = () => {
